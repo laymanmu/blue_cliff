@@ -4,23 +4,15 @@
     <meta charset="utf-8"/>
     <title>blue cliff</title>
     <link rel="stylesheet" href="style.css"/>
+    <script src="lib/entity.js"></script>
     <script src="lib/keyboard.js"></script>
-    <script src="lib/keystore.js"></script>
+    <script src="lib/mixins.js"></script>
     <script src="lib/repository.js"></script>
+    <script src="lib/screen.js"></script>
+    <script src="lib/screenManager.js"></script>
     <script src="app.js"></script>
-    <script src="screens.js"></script>
   </head>
   <body onload='App.init();'>
-    <table id="layout">
-      <tr>
-        <td><canvas id="canvas" width="800" height="300"></canvas></td>
-        <td rowspan="5" id="side">side</td>
-      </tr>
-      <tr><td id="details">details</td></tr>
-      <tr><td id="actions">actions</td></tr>
-      <tr><td><div id="log">log</div></td></tr>
-      <tr><td><input id="input" type="text" placeholder="input"/></td></tr>
-    </table><!-- layout -->
-    <div id="popup"></div><!-- popup -->
+    <div id="layout"></div><!-- layout -->
   </body>
 </html>
