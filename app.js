@@ -46,8 +46,30 @@ class App {
     }
 
     showPopup(markup) {
+        const leftMargin = 100;
+        const posX = this.mouse.clientX + leftMargin;
+        let   posY = this.mouse.clientY;
+
+        this.ui.popup.innerHTML     = markup;
+        this.ui.popup.style.display = 'block';
+
+        // ensure vertical placement doesn't go under screen:
+        const popupHeight  = this.ui.popup.offsetHeight;
+        const screenHeight = document.body.clientHeight;
+        const bottom       = posY + popupHeight;
+        const cutoff       = bottom - screenHeight;
+        if (cutoff > 0) {
+            const bottomMargin = 30;
+            posY = this.mouse.pageY - (cutoff + bottomMargin);
+        } else {
+            posY = this.mouse.pageY;
+        }
+
+        this.ui.popup.style.left = `${posX}px`;
+        this.ui.popup.style.top  = `${posY}px`;
     }
 
     hidePopup() {
+        this.ui.popup.style.display = 'none';
     }
 };
