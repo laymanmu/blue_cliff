@@ -4,17 +4,20 @@
         <meta charset="utf-8"/>
         <title>blue cliff</title>
         <link rel="stylesheet" href="style.css"/>
+        <script src="rpg/action.js"></script>
+        <script src="rpg/player.js"></script>
+        <script src="rpg/game.js"></script>
         <script src="app.js"></script>
     </head>
     <body onload="App.Start();">
         <table id="layout">
             <tr>
                 <td><canvas id="canvas" width="800" height="300"></canvas></td>
-                <td rowspan="5" id="side">side</td>
+                <td rowspan="5" id="side"></td>
             </tr>
-            <tr><td id="details">details</td></tr>
-            <tr><td id="actions">actions</td></tr>
-            <tr><td><div id="log">log</div></td></tr>
+            <tr><td id="details"></td></tr>
+            <tr><td id="actions"></td></tr>
+            <tr><td><div id="log"></div></td></tr>
             <tr><td><input id="input" type="text" placeholder="input"/></td></tr>
           </table>
           <div id="popup"></div>
