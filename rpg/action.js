@@ -1,7 +1,7 @@
 
 class Action {
     constructor(name, desc, command, imageSrc, cost=1, isSustained=false) {
-        this.id              = App.instance.id("action");
+        this.id              = Game.getid("action");
         this.name            = name;
         this.desc            = desc;
         this.command         = command;

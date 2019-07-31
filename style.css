@@ -37,7 +37,8 @@ td {
 #actions {
     height: 50px;
 }
-  
+
+
 #log {
     height: 100px;
     vertical-align: top;
@@ -45,7 +46,14 @@ td {
     font-size: 12px;
     overflow: auto;
 }
-  
+.newLogMessage {
+    color: #dee;
+}
+.oldLogMessage {
+    color: #666;
+}
+
+
 #input {
     width: 99%;
     background-color: #cecece;

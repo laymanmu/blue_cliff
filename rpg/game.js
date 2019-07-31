@@ -1,30 +1,27 @@
 
 class Game {
+    static getid(prefix) {
+        if (!this._ids) this._ids = {};
+        this._ids[prefix] = this._ids[prefix] || 0;
+        return `${prefix}_${this._ids[prefix]++}`;
+    }
     constructor() {
         this.display = new Display();
-        this.data    = {
-            cmdHistory:  {pos:0, partial:null, commands:[]},
-            logMessages: {newLogIds:[], messages:[]}
-        };
-    }
-
-    initPlayer() {
-        this.player = new Player();
+        this.cmdHist =  {pos:0, partial:null, commands:[]};
+        this.player  = new Player();
     }
 
     handleKeyPress(keyCode) {
         this.log(`got input: ${keyCode}`);
+        this.update();
     }
 
     update() {
-    }
-
-    refresh() {
+        this.display.update();
+        this.player.update();
     }
 
     log(message, keepNew=false) {
-        const id = this.display.addLogMessage(message, keepNew);
-        this.data.logMessages.newLogIds.push(id);
-        this.data.logMessages.messages.push(message);
+        this.display.addLogMessage(message, keepNew);
     }
 }

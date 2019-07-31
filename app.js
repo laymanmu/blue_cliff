@@ -1,11 +1,11 @@
 
 class App {
     static Start() {
-        this.instance      = new App();
-        this.instance.game = new Game();
+        this.instance = new App();
     }
 
     constructor() {
+        this.game  = new Game();
         this.mouse = {clientX:0, clientY:0, pageX:0, pageY:0};
         document.onmousemove = (e) => { this.handleMouseMove(e); };
         window.onkeypress    = (e) => { this.handleKeyPress(e);  };
@@ -19,16 +19,8 @@ class App {
     }
 
     handleKeyPress(event) {
-        if (this.game) {
-            event = event || window.event;
-            const keyCode = event.which == 0 ? event.keyCode : event.which;
-            this.game.handleKeyPress(keyCode);
-        }
-    }
-
-    id(prefix) { 
-        if (!this._ids) this._ids = {prefix: 0};
-        this._ids[prefix] = this._ids[prefix] || 0;
-        return `${prefix}_${this._ids[prefix]++}`;
+        event = event || window.event;
+        const keyCode = event.which == 0 ? event.keyCode : event.which;
+        this.game.handleKeyPress(keyCode);
     }
 };
