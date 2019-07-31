@@ -1,9 +1,9 @@
 
 class Game {
     constructor() {
-        this.context = App.instance.ui.context;
-        this.data = {
-            cmdHistory: {pos:0, partial:null, commands:[]},
+        this.display = new Display();
+        this.data    = {
+            cmdHistory:  {pos:0, partial:null, commands:[]},
             logMessages: {newLogIds:[], messages:[]}
         };
     }
@@ -23,12 +23,8 @@ class Game {
     }
 
     log(message, keepNew=false) {
-        const id     = App.instance.id('log');
-        const klass  = keepNew ? 'newLogMessage' : 'newLogMessage keepNew';
-        const markup = App.instance.getLogMessageMarkup(id, klass, message);
-        App.instance.ui.log.innerHTML += markup;
-        this.data.logMessages.messages.push(message);
+        const id = this.display.addLogMessage(message, keepNew);
         this.data.logMessages.newLogIds.push(id);
-        App.instance.ui.log.scrollTop = App.instance.ui.log.scrollHeight;
+        this.data.logMessages.messages.push(message);
     }
 }
