@@ -34,17 +34,37 @@ td {
     vertical-align: top;
 }
   
+#input {
+    width: 99%;
+    background-color: #cecece;
+}
+
+/** actions: **/
 #actions {
     height: 50px;
 }
+.actionIcon {
+    width: 50px;
+    border: 2px solid black;
+}
+.actionReady {
+    border: 2px solid green;
+    opacity: 1.0;
+}
+.actionNotReady {
+    border: 2px solid red;
+    opacity: 0.1;
+}
 
 
+/** logging: **/
 #log {
     height: 100px;
     vertical-align: top;
     color: #aaa;
     font-size: 12px;
     overflow: auto;
+    padding-top: 10px;
 }
 .newLogMessage {
     color: #dee;
@@ -54,8 +74,29 @@ td {
 }
 
 
-#input {
-    width: 99%;
-    background-color: #cecece;
+/** popups: **/
+#popup {
+    display: none;
+    position: absolute;
+    border: 2px solid #987;
+    background-color: #123;
+    color: #fff;
+    text-align: left;
+    padding: 5px;
+    font-size: 12px;
+    width: 200px;
 }
-  
+.popupName {
+    text-align: center;
+    font-size: 14px;
+    color: #ff0;
+}
+.popupDesc {
+    font-style: italic;
+    padding: 5px;
+}
+.popupImage {
+    width: 25px;
+    height: 25px;
+    float: left;
+}

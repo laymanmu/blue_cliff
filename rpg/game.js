@@ -5,23 +5,21 @@ class Game {
         this._ids[prefix] = this._ids[prefix] || 0;
         return `${prefix}_${this._ids[prefix]++}`;
     }
+
     constructor() {
-        this.display = new Display();
-        this.cmdHist =  {pos:0, partial:null, commands:[]};
+        this.cmdHist = {pos:0, partial:null, commands:[]};
         this.player  = new Player();
+        this.display = new Display();
+        this.display.showActions(this.player.actions);
     }
 
     handleKeyPress(keyCode) {
-        this.log(`got input: ${keyCode}`);
+        this.display.showLogMessage(`got input: ${keyCode}`);
         this.update();
     }
 
     update() {
         this.display.update();
         this.player.update();
-    }
-
-    log(message, keepNew=false) {
-        this.display.addLogMessage(message, keepNew);
     }
 }

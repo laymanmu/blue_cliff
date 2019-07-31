@@ -13,8 +13,9 @@ class Display {
 
     showPopup(markup) {
         const leftMargin = 100;
-        const posX = this.mouse.clientX + leftMargin;
-        let   posY = this.mouse.clientY;
+        const mouse      = App.Mouse();
+        const posX       = mouse.clientX + leftMargin;
+        let   posY       = mouse.clientY;
 
         this.popup.innerHTML     = markup;
         this.popup.style.display = 'block';
@@ -26,9 +27,9 @@ class Display {
         const cutoff       = bottom - screenHeight;
         if (cutoff > 0) {
             const bottomMargin = 30;
-            posY = this.mouse.pageY - (cutoff + bottomMargin);
+            posY = mouse.pageY - (cutoff + bottomMargin);
         } else {
-            posY = this.mouse.pageY;
+            posY = mouse.pageY;
         }
 
         this.popup.style.left = `${posX}px`;
@@ -39,7 +40,7 @@ class Display {
         this.popup.style.display = 'none';
     }
 
-    addLogMessage(message, keepNew=false) {
+    showLogMessage(message, keepNew=false) {
         const id     = Game.getid('log');
         const klass  = keepNew ? 'newLogMessage' : 'newLogMessage keepNew';
         const markup = `<span id="${id}" class="${klass}">${message}</span><br>`;
@@ -68,4 +69,19 @@ class Display {
             }
         }
     }
+
+    showActions(actions) {
+        this.actions.innerHTML = "";
+        for (let i=0; i<actions.length; i++) {
+            const action = actions[i];
+            this.actions.appendChild(action.image);
+        }
+    }
+
+    getPopupHeaderMarkup(name, desc, imageSrc) {
+        const image = imageSrc ? `<img class="popupImage" src="${imageSrc}"/>` : '';
+        return `<table>${image}<tr><td class="popupName">${name}</td></tr><tr><td class="popupDesc">${desc}</td></tr></table>`;
+    }
+
+
 }

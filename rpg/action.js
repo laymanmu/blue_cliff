@@ -13,11 +13,27 @@ class Action {
         this.image.className = "actionIcon actionReady";
         this.coolDownValue   = 0;
         
-        // events:
-        this.image.command = this.command;
+        // events
         this.image.addEventListener("mouseenter", (e) => {
+            App.Display().showPopup(this.getPopupMarkup());
+        });
+        this.image.addEventListener("mouseleave", (e) => {
+            App.Display().hidePopup();
+        });
+        this.image.addEventListener("click", (e) => {
+            this.use();
         });
     }
 
+    use() {
+        App.Display().showLogMessage(`clicked action: ${this.name}`);
+        App.Game().update();
+    }
 
+    update() {
+    }
+
+    getPopupMarkup() {
+        return App.Display().getPopupHeaderMarkup(this.name, this.desc, this.image.src);
+    }
 }
