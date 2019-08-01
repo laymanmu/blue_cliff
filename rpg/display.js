@@ -83,5 +83,8 @@ class Display {
         return `<table>${image}<tr><td class="popupName">${name}</td></tr><tr><td class="popupDesc">${desc}</td></tr></table>`;
     }
 
+    getTableRowKeyValueMarkup(key, value, trClass="", tdKeyClass="", tdValueClass="") {
+        return `<tr class="${trClass}"><td class="${tdKeyClass}">${key}</td><td class="${tdValueClass}">${value}</td></tr>`;
+    }
 
 }
