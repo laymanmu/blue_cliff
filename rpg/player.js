@@ -10,7 +10,7 @@ class Player {
         const concentrateCommand = () => { App.Display().showLogMessage(`${this.name} concentrates.`)};
 
         const restAction         = new Action("rest", "rests", restCommand, "images/action_rest.png", 3, false);
-        const runAction          = new Action("run", "runs", restCommand, "images/action_run.png", 3, false);
+        const runAction          = new Action("run",  "runs",  runCommand,  "images/action_run.png",  3, false);
         const concentrateAction  = new Action("concentrate", "concentrates your mind", concentrateCommand, "images/action_concentrate.png", 10, true);
         
         this.actions = [restAction, runAction, concentrateAction];
