@@ -5,8 +5,7 @@ class Player {
         this.name = "player";
         this.desc = "player";
 
-        const noop = () => {};
-
+        const noop             = () => {};
         const restStart        = () => { App.Display().showLogMessage(`${this.name} rests.`)};
         const runStart         = () => { App.Display().showLogMessage(`${this.name} runs.`)};
         const runStop          = () => { App.Display().showLogMessage(`${this.name} stops running.`)};

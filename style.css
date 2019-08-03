@@ -67,7 +67,9 @@ td {
     border: 2px solid rgb(255, 255, 0);
     opacity: 1.0;
 }
-
+.actionType {
+    color: green;
+}
 
 /** logging: **/
 #log {

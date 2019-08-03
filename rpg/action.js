@@ -8,13 +8,13 @@ class Action {
         this.stopCommand     = stopCommand;
         this.isSustaining    = isSustaining;
         this.coolDownCost    = cost;
+        this.coolDownValue   = 0;
+        this.isSustaining    = isSustaining;
+        this.isSustained     = false;
         this.image           = document.createElement('img');
         this.image.id        = this.id;
         this.image.src       = imageSrc;
         this.image.className = "actionIcon actionReady";
-        this.coolDownValue   = 0;
-        this.isSustaining    = isSustaining;
-        this.isSustained     = false;
         
         // events
         this.image.addEventListener("mouseenter", (e) => {
@@ -82,12 +82,13 @@ class Action {
     }
 
     getPopupMarkup() {
-        let markup = App.Display().getPopupHeaderMarkup(this.name, this.desc, this.image.src);
-        markup += '<hr/><table>';
-        markup += App.Display().getTableRowKeyValueMarkup("id:", this.id);
-        markup += App.Display().getTableRowKeyValueMarkup("cooldown cost:", this.coolDownCost);
-        markup += App.Display().getTableRowKeyValueMarkup("cooldown value:", this.coolDownValue);
-        markup += '</table>';
-        return markup;
+        // pair example: {key:"required", value:"required", rowClass="optional", keyClass="optional", valueClass="optional"}
+        const keyValues = [
+            {key: "type:          ", value: "action", valueClass:"actionType"},
+            {key: "id:            ", value: this.id},
+            {key: "cooldown cost: ", value: this.coolDownCost},
+            {key: "cooldown value:", value: this.coolDownValue}
+        ]
+        return App.Display().getPopupMarkup(this.name, this.desc, this.image.src, keyValues);
     }
 }

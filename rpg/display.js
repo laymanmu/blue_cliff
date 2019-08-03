@@ -78,6 +78,17 @@ class Display {
         }
     }
 
+    getPopupMarkup(name, desc, imageSrc, keyValuePairs) {
+        let markup = this.getPopupHeaderMarkup(name, desc, imageSrc);
+        markup += "</hr><table>";
+        for (let i=0; i<keyValuePairs.length; i++) {
+            const pair = keyValuePairs[i];
+            markup += this.getTableRowKeyValueMarkup(pair.key, pair.value, pair.rowClass, pair.keyClass, pair.valueClass);
+        }
+        markup += "</table>";
+        return markup;
+    }
+
     getPopupHeaderMarkup(name, desc, imageSrc) {
         const image = imageSrc ? `<img class="popupImage" src="${imageSrc}"/>` : '';
         return `<table>${image}<tr><td class="popupName">${name}</td></tr><tr><td class="popupDesc">${desc}</td></tr></table>`;
