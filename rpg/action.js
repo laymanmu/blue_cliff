@@ -1,21 +1,20 @@
 
 class Action {
-    constructor(name, desc, command, imageSrc, cost=1, isSustaining=false) {
+    constructor(name, desc, startCommand, stopCommand, imageSrc, cost=1, isSustaining=false) {
         this.id              = Game.getid("action");
         this.name            = name;
         this.desc            = desc;
-        this.command         = command;
+        this.startCommand    = startCommand;
+        this.stopCommand     = stopCommand;
+        this.isSustaining    = isSustaining;
         this.coolDownCost    = cost;
         this.image           = document.createElement('img');
         this.image.id        = this.id;
         this.image.src       = imageSrc;
         this.image.className = "actionIcon actionReady";
         this.coolDownValue   = 0;
-
-        if (isSustaining) {
-            this.isSustaining = true;
-            this.isSustained  = false;
-        }
+        this.isSustaining    = isSustaining;
+        this.isSustained     = false;
         
         // events
         this.image.addEventListener("mouseenter", (e) => {
@@ -25,31 +24,45 @@ class Action {
             App.Display().hidePopup();
         });
         this.image.addEventListener("click", (e) => {
-            this.use();
+            this.handleClick();
         });
     }
 
-    use() {
+    handleClick() {
+        if (this.isActive()) {
+            this.stop();
+            return;
+        } 
         if (this.coolDownValue != 0) {
             App.Display().showLogMessage(`${this.name} is not ready`);
             return;
         }
-        if (this.isSustained) {
-            App.Display().showLogMessage(`TODO: disable ${this.name}`);
-            return;
-        }
+        this.start();
+    }
 
+    start() {
+        this.startCommand();
         App.Game().update();
-        this.command();
-        this.coolDownValue = this.coolDownCost;
-
+        this.coolDownValue   = this.coolDownCost;
+        this.image.className = "actionIcon";
         if (this.isSustaining) {
-            this.isSustained = true;
-            this.image.className = "actionIcon actionSustained";
-        } else {
-            if (this.coolDownValue != 0) {
-                this.image.className = "actionIcon actionNotReady";
-            }
+            this.isSustained      = true;
+            this.image.className += " actionSustained";
+        } else if (this.coolDownValue != 0) {
+            this.image.className += " actionNotReady";
+        }
+    }
+
+    stop() {
+        this.stopCommand();
+        App.Game().update();
+        this.coolDownValue   = this.coolDownCost;
+        this.image.className = "actionIcon";
+        if (this.isSustaining) {
+            this.isSustained = false;
+        }
+        if (this.coolDownValue != 0) {
+            this.image.className += " actionNotReady";
         }
     }
 
@@ -62,6 +75,10 @@ class Action {
                 }
             }
         }
+    }
+
+    isActive() {
+        return this.isSustaining && this.isSustained;
     }
 
     getPopupMarkup() {

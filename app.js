@@ -2,6 +2,7 @@
 class App {
     static Start() {
         this.instance = new App();
+        this.Display().showLogMessage(`started ${new Date()}`);
     }
     static Display() {
         return this.instance.game.display;
