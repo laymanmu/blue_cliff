@@ -18,16 +18,11 @@ body {
 
 table {
     border-collapse: collapse;
-    border: 1px solid gold;
+    width: 100%;
 }
 
-td {
-    border: 1px solid black;
-  }
-  
 #layout {
     background-color: #111;
-    border: 1px solid rgb(12, 64, 124);
     color: #eee;
     font-family: 'Fira Code';
 }
@@ -35,9 +30,8 @@ td {
 #side {
     width: 200px;
     vertical-align: top;
-    background-color: #aabbcc;
 }
-  
+
 #details {
     height: 100px;
     vertical-align: top;
@@ -104,10 +98,12 @@ td {
     text-align: center;
     font-size: 14px;
     color: #ff0;
+    width: 100%;
 }
 .popupDesc {
     font-style: italic;
     padding: 5px;
+    width: 100%;
 }
 .popupImage {
     width: 25px;

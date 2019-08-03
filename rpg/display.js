@@ -91,7 +91,9 @@ class Display {
 
     getPopupHeaderMarkup(name, desc, imageSrc) {
         const image = imageSrc ? `<img class="popupImage" src="${imageSrc}"/>` : '';
-        return `<table>${image}<tr><td class="popupName">${name}</td></tr><tr><td class="popupDesc">${desc}</td></tr></table>`;
+        let markup = `<table><tr><td>${image}</td><td class="popupName">${name}</td></tr>`;
+        markup    += `<tr><td class="popupDesc" colspan="2">${desc}</td></tr></table>`;
+        return markup;
     }
 
     getTableRowKeyValueMarkup(key, value, trClass="", tdKeyClass="", tdValueClass="") {
