@@ -30,6 +30,21 @@ table {
 #side {
     width: 200px;
     vertical-align: top;
+    padding: 3px;
+}
+#side h5 {
+    text-align: center;
+    background-color: rgb(2, 43, 78);
+}
+#effects {
+    background-color: rgb(20, 20, 20);
+    margin-bottom: 5px;
+    border: 1px solid gold;
+}
+#stats {
+    background-color: rgb(20, 20, 20);
+    margin-bottom: 5px;
+    border: 1px solid gold;
 }
 
 #details {

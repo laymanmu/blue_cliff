@@ -7,6 +7,8 @@ class Display {
         this.actions     = document.getElementById('actions');
         this.log         = document.getElementById('log');
         this.side        = document.getElementById('side');
+        this.effects     = document.getElementById('effects');
+        this.stats       = document.getElementById('stats');
         this.popup       = document.getElementById('popup');
         this.popupSource = null;
         this.newLogIds   = [];
@@ -79,7 +81,8 @@ class Display {
     update() {
         this.refreshLogMessages();
         this.refreshPopup();
-        this.refreshSide();
+        this.refreshStats();
+        this.refreshEffects();
     }
 
     showActions(actions) {
@@ -90,15 +93,28 @@ class Display {
         }
     }
 
-    refreshSide() {
+    refreshEffects() {
         let effects = App.Game().player.effects;
-        let markup = '<div><h4>Active Effects:</h4><table>';
+        let markup = '<h5>Effects:</h5><table>';
         for (let i=0; i<effects.length; i++) {
             const effect = effects[i];
             const delta  = effect.statDelta > 0 ? `+${effect.statDelta}` : effect.statDelta;
             markup += `<tr><td>${effect.name}</td><td>(${delta} ${effect.statName})</td></tr>`;
         }
-        markup += '</table></div>';
-        this.side.innerHTML = markup;
+        if (effects.length < 1) {
+            markup += '<tr><td>none</td></tr>';
+        }
+        markup += '</table>';
+        this.effects.innerHTML = markup;
+    }
+
+    refreshStats() {
+        let stats  = App.Game().player.stats;
+        let markup = '<h5>Stats:</h5><table>';
+        for (let name in stats) {
+            markup += `<tr><td>${name}:</td><td>${stats[name]}</td></tr>`;
+        }
+        markup += '</table>';
+        this.stats.innerHTML = markup;
     }
 }
