@@ -1,21 +1,21 @@
 
 class Action {
-    constructor(name, desc, startCommand, stopCommand, imageSrc, cost=1, isSustaining=false) {
+    constructor(props) {
         this.id              = Game.getid("action");
-        this.name            = name;
-        this.desc            = desc;
-        this.startCommand    = startCommand;
-        this.stopCommand     = stopCommand;
-        this.isSustaining    = isSustaining;
-        this.coolDownCost    = cost;
-        this.coolDownValue   = 0;
-        this.isSustaining    = isSustaining;
-        this.isSustained     = false;
         this.image           = document.createElement('img');
         this.image.id        = this.id;
-        this.image.src       = imageSrc;
         this.image.className = "actionIcon actionReady";
-        
+        this.coolDownValue   = 0;
+        this.isSustained     = false;
+        // props:
+        this.name          = props.name;
+        this.desc          = props.desc;
+        this.startCommand  = props.startCommand;
+        this.stopCommand   = props.stopCommand;
+        this.isSustaining  = props.isSustaining;
+        this.coolDownCost  = props.coolDownCost;
+        this.isSustaining  = props.isSustaining;
+        this.image.src     = props.imageSrc;
         // events
         this.image.addEventListener("mouseenter", (e) => {
             App.Display().showPopup(this);
@@ -31,6 +31,7 @@ class Action {
     handleClick() {
         if (this.isActive()) {
             this.stop();
+            App.Display().update();
             return;
         } 
         if (this.coolDownValue != 0) {

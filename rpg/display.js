@@ -79,6 +79,7 @@ class Display {
     update() {
         this.refreshLogMessages();
         this.refreshPopup();
+        this.refreshSide();
     }
 
     showActions(actions) {
@@ -87,5 +88,17 @@ class Display {
             const action = actions[i];
             this.actions.appendChild(action.image);
         }
+    }
+
+    refreshSide() {
+        let effects = App.Game().player.effects;
+        let markup = '<div><h4>Active Effects:</h4><table>';
+        for (let i=0; i<effects.length; i++) {
+            const effect = effects[i];
+            const delta  = effect.statDelta > 0 ? `+${effect.statDelta}` : effect.statDelta;
+            markup += `<tr><td>${effect.name}</td><td>(${delta} ${effect.statName})</td></tr>`;
+        }
+        markup += '</table></div>';
+        this.side.innerHTML = markup;
     }
 }

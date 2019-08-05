@@ -1,27 +1,47 @@
 
 class Player {
     constructor() {
-        this.id   = Game.getid("player");
-        this.name = "player";
-        this.desc = "player";
-
-        const noop             = () => {};
-        const restStart        = () => { App.Display().showLogMessage(`${this.name} rests.`)};
-        const runStart         = () => { App.Display().showLogMessage(`${this.name} runs.`)};
-        const runStop          = () => { App.Display().showLogMessage(`${this.name} stops running.`)};
-        const concentrateStart = () => { App.Display().showLogMessage(`${this.name} concentrates.`)};
-        const concentrateStop  = () => { App.Display().showLogMessage(`${this.name} loses concentration.`)};
-
-        const restAction         = new Action("rest", "rest a single turn", restStart, noop, "images/action_rest.png", 0, false);
-        const runAction          = new Action("run", "sustained running", runStart, runStop, "images/action_run.png", 10, true);
-        const concentrateAction  = new Action("concentrate", "sustained concentration",concentrateStart, concentrateStop, "images/action_concentrate.png", 10, true);
-        
-        this.actions = [restAction, runAction, concentrateAction];
+        this.id    = Game.getid("player");
+        this.name  = "player";
+        this.desc  = "player";
+        this.stats = {
+            con: 10,
+            str: 10, 
+            dex: 10,
+            int: 10,
+            hp:  100
+        };
+        this.effects = [];
+        this.actions = [
+            ActionsRepo.create('rest'), 
+            ActionsRepo.create('run'), 
+            ActionsRepo.create('concentrate')
+        ];
     }
 
     update() {
         for (let i=0; i<this.actions.length; i++) {
             this.actions[i].update();
         }
+    }
+
+    addEffect(name, overrides) {
+        this.effects.push(EffectsRepo.create(name, overrides));
+        console.log(this.getEffectNames());
+    }
+
+    removeEffect(name) {
+        const effects = [];
+        for (let i=0; i<this.effects.length; i++) {
+            const effect = this.effects[i];
+            if (effect.name !== name) {
+                effects.push(effect);
+            }
+        }
+        this.effects = effects;
+    }
+
+    getEffectNames() {
+        return this.effects.map((e) => { return e.name; });
     }
 }
