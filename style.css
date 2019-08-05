@@ -89,13 +89,10 @@ table {
     overflow: auto;
     padding-top: 10px;
 }
-.newLogMessage {
-    color: #dee;
-}
-.oldLogMessage {
-    color: #666;
-}
-
+.brightLogMessage { color: #dee; }
+.logMessage { color: #aaa; }
+.darkLogMessage { color: #555; }
+.darkerLogMessage { color: #333; }
 
 /** popups: **/
 #popup {

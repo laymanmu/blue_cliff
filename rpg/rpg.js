@@ -97,7 +97,7 @@ rpg.Game = class Game {
     }
     update() {
         this.turnNum++;
-        this.display.showLogMessage(`=== o==]/////> turn: ${this.turnNum} ===============`);
+        this.display.showLogMessage(`=== [turn: ${this.turnNum}] ===`);
         this.player.update();
         this.display.update();
     }

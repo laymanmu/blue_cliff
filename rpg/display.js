@@ -48,10 +48,9 @@ class Display {
         this.popupSource = null;
     }
 
-    showLogMessage(message, keepNew=false) {
+    showLogMessage(message) {
         const id     = rpg.Game.uid();
-        const klass  = keepNew ? 'newLogMessage' : 'newLogMessage keepNew';
-        const markup = `<span id="${id}" class="${klass}">[turn:${App.Game().turnNum}] ${message}</span><br>`;
+        const markup = `<span id="${id}" class="brightLogMessage">[turn:${App.Game().turnNum}] ${message}</span><br>`;
         this.log.innerHTML += markup;
         this.log.scrollTop = this.log.scrollHeight;
         this.newLogIds.push(id);
@@ -59,23 +58,28 @@ class Display {
     }
 
     refreshLogMessages() {
+        const stillNewLogIds  = [];
+        const thisTurnPrefix  = `[turn:${App.Game().turnNum}]`;
+        const lastTurnPrefix  = `[turn:${App.Game().turnNum-1}]`;
+        const lastTurn2Prefix = `[turn:${App.Game().turnNum-2}]`;
         for (let i=0; i<this.newLogIds.length; i++) {
             const logId   = this.newLogIds[i];
             const element = document.getElementById(logId);
-            const classes = element.className.split(/\s+/);
-            let   keepNew = false;
-            for (let i=0; i<classes.length; i++) {
-                const klass = classes[i].trim();
-                if (klass === "keepNew") {
-                    keepNew = true;
-                }
-            }
-            if (keepNew) {
-                element.className = "newLogMessage";
+            const message = element.innerHTML;
+            if (message.startsWith(thisTurnPrefix)) {
+                element.className = "brightLogMessage";
+                stillNewLogIds.push(logId);
+            } else if (message.startsWith(lastTurnPrefix)) {
+                element.className = "logMessage";
+                stillNewLogIds.push(logId);
+            } else if (message.startsWith(lastTurn2Prefix)) {
+                element.className = "darkLogMessage";
+                stillNewLogIds.push(logId);
             } else {
-                element.className = "oldLogMessage";
+                element.className = "darkerLogMessage";
             }
         }
+        this.newLogIds = stillNewLogIds;
     }
 
     update() {
