@@ -17,7 +17,7 @@ class App {
 
     constructor() {
         this.mouse = {clientX:0, clientY:0, pageX:0, pageY:0};
-        this.game  = new Game();
+        this.game  = new rpg.Game();
         document.onmousemove = (e) => { this.handleMouseMove(e); };
         window.onkeypress    = (e) => { this.handleKeyPress(e);  };
     }

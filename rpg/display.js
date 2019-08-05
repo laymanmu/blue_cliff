@@ -49,7 +49,7 @@ class Display {
     }
 
     showLogMessage(message, keepNew=false) {
-        const id     = Game.getid('log');
+        const id     = rpg.Game.uid();
         const klass  = keepNew ? 'newLogMessage' : 'newLogMessage keepNew';
         const markup = `<span id="${id}" class="${klass}">[turn:${App.Game().turnNum}] ${message}</span><br>`;
         this.log.innerHTML += markup;
@@ -81,8 +81,8 @@ class Display {
     update() {
         this.refreshLogMessages();
         this.refreshPopup();
-        this.refreshStats();
         this.refreshEffects();
+        this.refreshStats();
     }
 
     showActions(actions) {
@@ -98,8 +98,15 @@ class Display {
         let markup = '<h5>Effects:</h5><table>';
         for (let i=0; i<effects.length; i++) {
             const effect = effects[i];
-            const delta  = effect.statDelta > 0 ? `+${effect.statDelta}` : effect.statDelta;
-            markup += `<tr><td>${effect.name}</td><td>(${delta} ${effect.statName})</td></tr>`;
+            const deltas = [];
+            for (let attr in effect.attributes) {
+                let value = effect.attributes[attr];
+                if (value > 0) {
+                    value = `+${value}`
+                }
+                deltas.push(`${attr}:${value}`)
+            } 
+            markup += `<tr><td>${effect.name}</td><td>${deltas.join(',')}</td></tr>`;
         }
         if (effects.length < 1) {
             markup += '<tr><td>none</td></tr>';
@@ -109,7 +116,7 @@ class Display {
     }
 
     refreshStats() {
-        let stats  = App.Game().player.stats;
+        let stats  = App.Game().player.attributes;
         let markup = '<h5>Stats:</h5><table>';
         for (let name in stats) {
             markup += `<tr><td>${name}:</td><td>${stats[name]}</td></tr>`;

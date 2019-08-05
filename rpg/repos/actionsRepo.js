@@ -1,8 +1,7 @@
 
-const ActionsRepo = new Repository("actions", (props) => { return new Action(props); });
+const ActionsRepo = new rpg.Repository("actions", (props) => { return new rpg.Action(props); });
 
 ActionsRepo.define('rest', {
-    "name":        "rest",
     "desc":        "rest a single turn",
     "coolDownCost": 0,
     "isSustaining": false,
@@ -17,7 +16,6 @@ ActionsRepo.define('rest', {
 });
 
 ActionsRepo.define('run', {
-    "name":        "run",
     "desc":        "sustained running",
     "coolDownCost": 8,
     "isSustaining": true,
@@ -35,7 +33,6 @@ ActionsRepo.define('run', {
 });
 
 ActionsRepo.define('concentrate', {
-    "name":        "concentrate",
     "desc":        "sustained concentration",
     "coolDownCost": 4,
     "isSustaining": true,

@@ -1,22 +1,10 @@
 
-class Action {
+rpg.Action = class extends rpg.Viewable {
     constructor(props) {
-        this.id              = Game.getid("action");
-        this.image           = document.createElement('img');
-        this.image.id        = this.id;
+        super(props);
         this.image.className = "actionIcon actionReady";
         this.coolDownValue   = 0;
         this.isSustained     = false;
-        // props:
-        this.name          = props.name;
-        this.desc          = props.desc;
-        this.startCommand  = props.startCommand;
-        this.stopCommand   = props.stopCommand;
-        this.isSustaining  = props.isSustaining;
-        this.coolDownCost  = props.coolDownCost;
-        this.isSustaining  = props.isSustaining;
-        this.image.src     = props.imageSrc;
-        // events
         this.image.addEventListener("mouseenter", (e) => {
             App.Display().showPopup(this);
         });
