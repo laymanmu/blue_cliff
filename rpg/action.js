@@ -18,7 +18,7 @@ class Action {
         
         // events
         this.image.addEventListener("mouseenter", (e) => {
-            App.Display().showPopup(this.getPopupMarkup());
+            App.Display().showPopup(this);
         });
         this.image.addEventListener("mouseleave", (e) => {
             App.Display().hidePopup();
@@ -38,11 +38,11 @@ class Action {
             return;
         }
         this.start();
+        App.Game().update();
     }
 
     start() {
         this.startCommand();
-        App.Game().update();
         this.coolDownValue   = this.coolDownCost;
         this.image.className = "actionIcon";
         if (this.isSustaining) {
@@ -55,7 +55,6 @@ class Action {
 
     stop() {
         this.stopCommand();
-        App.Game().update();
         this.coolDownValue   = this.coolDownCost;
         this.image.className = "actionIcon";
         if (this.isSustaining) {
@@ -88,7 +87,30 @@ class Action {
             {key: "id:            ", value: this.id},
             {key: "cooldown cost: ", value: this.coolDownCost},
             {key: "cooldown value:", value: this.coolDownValue}
-        ]
-        return App.Display().getPopupMarkup(this.name, this.desc, this.image.src, keyValues);
+        ];
+        let markup = '<table>';
+        markup += '<tr>';
+        markup +=   `<td><img class="popupImage" src="${this.image.src}"/></td>`;
+        markup +=   `<td class="popupName">${this.name}</td>`;
+        markup += '</tr>';
+        markup += '<tr>';
+        markup +=   `<td class="popupDesc" colspan="2">${this.desc}</td>`;
+        markup += '</tr>';
+        markup += '</table>';
+        markup += '<hr/>';
+        markup += '<table>';
+        for (let i=0; i<keyValues.length; i++) {
+            const pair = keyValues[i];
+            const rowClass = pair.rowClass   ? ` class="${pair.rowClass}"`   : '';
+            const keyClass = pair.keyClass   ? ` class="${pair.keyClass}"`   : '';
+            const valClass = pair.valueClass ? ` class="${pair.valueClass}"` : '';
+            markup += `<tr${rowClass}>`;
+            markup += `<td${keyClass}>${pair.key}</td>`;
+            markup += `<td${valClass}>${pair.value}</td>`;
+            markup += '</tr>';
+        }
+        markup += '</table>';
+        return markup;
     }
+
 }

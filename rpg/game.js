@@ -7,6 +7,7 @@ class Game {
     }
 
     constructor() {
+        this.turnNum = 0;
         this.cmdHist = {pos:0, partial:null, commands:[]};
         this.player  = new Player();
         this.display = new Display();
@@ -19,7 +20,9 @@ class Game {
     }
 
     update() {
-        this.display.update();
+        this.turnNum++;
+        this.display.showLogMessage(`=== o==]/////> turn: ${this.turnNum} ===============`);
         this.player.update();
+        this.display.update();
     }
 }

@@ -1,26 +1,26 @@
 
 class Display {
     constructor() {
-        this.canvas    = document.getElementById('canvas');
-        this.context   = this.canvas.getContext('2d');
-        this.details   = document.getElementById('details');
-        this.actions   = document.getElementById('actions');
-        this.log       = document.getElementById('log');
-        this.side      = document.getElementById('side');
-        this.popup     = document.getElementById('popup');
-        this.newLogIds = [];
+        this.canvas      = document.getElementById('canvas');
+        this.context     = this.canvas.getContext('2d');
+        this.details     = document.getElementById('details');
+        this.actions     = document.getElementById('actions');
+        this.log         = document.getElementById('log');
+        this.side        = document.getElementById('side');
+        this.popup       = document.getElementById('popup');
+        this.popupSource = null;
+        this.newLogIds   = [];
     }
 
-    showPopup(markup) {
+    showPopup(popupSource) {
+        this.popupSource = popupSource;
         const leftMargin = 100;
         const mouse      = App.Mouse();
         const posX       = mouse.clientX + leftMargin;
         let   posY       = mouse.clientY;
-
-        this.popup.innerHTML     = markup;
-        this.popup.style.display = 'block';
-
-        // ensure vertical placement doesn't go under screen:
+        const markup     = this.popupSource.getPopupMarkup();
+        this.popup.innerHTML      = markup;
+        this.popup.style.display  = 'block';
         const popupHeight  = this.popup.offsetHeight;
         const screenHeight = document.body.clientHeight;
         const bottom       = posY + popupHeight;
@@ -31,26 +31,32 @@ class Display {
         } else {
             posY = mouse.pageY;
         }
-
         this.popup.style.left = `${posX}px`;
         this.popup.style.top  = `${posY}px`;
     }
 
+    refreshPopup() {
+        if (this.popupSource != null) {
+            this.showPopup(this.popupSource);
+        }
+    }
+
     hidePopup() {
         this.popup.style.display = 'none';
+        this.popupSource = null;
     }
 
     showLogMessage(message, keepNew=false) {
         const id     = Game.getid('log');
         const klass  = keepNew ? 'newLogMessage' : 'newLogMessage keepNew';
-        const markup = `<span id="${id}" class="${klass}">${message}</span><br>`;
+        const markup = `<span id="${id}" class="${klass}">[turn:${App.Game().turnNum}] ${message}</span><br>`;
         this.log.innerHTML += markup;
         this.log.scrollTop = this.log.scrollHeight;
         this.newLogIds.push(id);
         return id;
     }
 
-    update() {
+    refreshLogMessages() {
         for (let i=0; i<this.newLogIds.length; i++) {
             const logId   = this.newLogIds[i];
             const element = document.getElementById(logId);
@@ -70,6 +76,11 @@ class Display {
         }
     }
 
+    update() {
+        this.refreshLogMessages();
+        this.refreshPopup();
+    }
+
     showActions(actions) {
         this.actions.innerHTML = "";
         for (let i=0; i<actions.length; i++) {
@@ -77,27 +88,4 @@ class Display {
             this.actions.appendChild(action.image);
         }
     }
-
-    getPopupMarkup(name, desc, imageSrc, keyValuePairs) {
-        let markup = this.getPopupHeaderMarkup(name, desc, imageSrc);
-        markup += "</hr><table>";
-        for (let i=0; i<keyValuePairs.length; i++) {
-            const pair = keyValuePairs[i];
-            markup += this.getTableRowKeyValueMarkup(pair.key, pair.value, pair.rowClass, pair.keyClass, pair.valueClass);
-        }
-        markup += "</table>";
-        return markup;
-    }
-
-    getPopupHeaderMarkup(name, desc, imageSrc) {
-        const image = imageSrc ? `<img class="popupImage" src="${imageSrc}"/>` : '';
-        let markup = `<table><tr><td>${image}</td><td class="popupName">${name}</td></tr>`;
-        markup    += `<tr><td class="popupDesc" colspan="2">${desc}</td></tr></table>`;
-        return markup;
-    }
-
-    getTableRowKeyValueMarkup(key, value, trClass="", tdKeyClass="", tdValueClass="") {
-        return `<tr class="${trClass}"><td class="${tdKeyClass}">${key}</td><td class="${tdValueClass}">${value}</td></tr>`;
-    }
-
 }
