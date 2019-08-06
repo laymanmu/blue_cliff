@@ -103,12 +103,12 @@ class Display {
         for (let i=0; i<effects.length; i++) {
             const effect = effects[i];
             const deltas = [];
-            for (let attr in effect.attributes) {
-                let value = effect.attributes[attr];
+            for (let name in effect.attributes) {
+                let value = effect.attributes[name];
                 if (value > 0) {
                     value = `+${value}`
                 }
-                deltas.push(`${attr}:${value}`)
+                deltas.push(`${name}:${value}`)
             } 
             markup += `<tr><td>${effect.name}</td><td>${deltas.join(',')}</td></tr>`;
         }
@@ -120,7 +120,7 @@ class Display {
     }
 
     refreshStats() {
-        let stats  = App.Game().player.attributes;
+        let stats  = App.Game().player.getEffectedAttributes();
         let markup = '<h5>Stats:</h5><table>';
         for (let name in stats) {
             markup += `<tr><td>${name}:</td><td>${stats[name]}</td></tr>`;

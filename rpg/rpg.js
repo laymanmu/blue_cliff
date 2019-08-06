@@ -27,6 +27,14 @@ rpg.Effect = class extends rpg.Viewable {
     constructor(props) {
         super(props);
     }
+    isOnAttribute(name) {
+        for (let n in this.attributes) {
+            if (n === name) {
+                return true;
+            }
+        }
+        return false;
+    }
 };
 
 rpg.Repository = class {
@@ -74,9 +82,16 @@ rpg.Mob = class extends rpg.Viewable {
         }
         this.effects = effects;
     }
-    getAttributeValue(code) {
-        const attr = this.attributes[code];
-        let value  = attr.value;
+    getEffectedAttributes() {
+        const attrs = {};
+        for (let name in this.attributes) {
+            let value = this.attributes[name];
+            for (let i=0; i<this.effects.length; i++) {
+                value += (parseInt(this.effects[i].attributes[name]) || 0);
+            }
+            attrs[name] = value;
+        }
+        return attrs;
     }
 };
 
