@@ -30,12 +30,21 @@ table {
 #mobs {
     height: 100px;
     vertical-align: top;
-    background-color: #345;
+    background-color: #1a1a1a;
+}
+#mobs img {
+    height: 50px;
 }
 
-#details {
+#room {
     height: 100px;
     vertical-align: top;
+}
+.roomName {
+  color: #ffffaa;
+}
+.roomDesc {
+  color: #ababff;
 }
   
 #side {

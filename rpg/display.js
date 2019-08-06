@@ -2,7 +2,7 @@
 class Display {
     constructor() {
         this.mobs        = document.getElementById('mobs');
-        this.details     = document.getElementById('details');
+        this.room        = document.getElementById('room');
         this.actions     = document.getElementById('actions');
         this.log         = document.getElementById('log');
         this.side        = document.getElementById('side');
@@ -47,6 +47,11 @@ class Display {
         this.popupSource = null;
     }
 
+    refreshRoom() {
+        this.room.innerHTML = App.Game().room.getRoomMarkup();
+        this.showMobs(App.Game().room.mobs);        
+    }
+
     showLogMessage(message) {
         const id     = rpg.Game.uid();
         const markup = `<span id="${id}" class="brightLogMessage">[turn:${App.Game().turnNum}] ${message}</span><br>`;
@@ -82,6 +87,7 @@ class Display {
     }
 
     update() {
+        this.refreshRoom();
         this.refreshLogMessages();
         this.refreshPopup();
         this.refreshEffects();
@@ -90,9 +96,15 @@ class Display {
 
     showActions(actions) {
         this.actions.innerHTML = "";
-        for (let i=0; i<actions.length; i++) {
-            const action = actions[i];
+        for (let action of actions) {
             this.actions.appendChild(action.image);
+        }
+    }
+
+    showMobs(mobs) {
+        this.mobs.innerHTML = "";
+        for (let mob of mobs) {
+            this.mobs.appendChild(mob.image);
         }
     }
 

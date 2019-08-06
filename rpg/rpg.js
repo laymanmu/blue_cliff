@@ -1,34 +1,6 @@
 
 var rpg = {};
 
-rpg.Viewable = class {
-    constructor(props) {
-        this.id = rpg.Game.uid();
-        for (let key in props) {
-            if (key == "imageSrc") {
-                this.image     = document.createElement('img');
-                this.image.src = props.imageSrc;
-                this.image.id  = this.id;
-            } else {
-                this[key] = props[key];
-            }
-        }
-    }
-};
-
-rpg.SAttribute = class extends rpg.Viewable {
-    constructor(props) {
-        super.constructor(props);
-        this.value = props.max;
-    }
-};
-
-rpg.Effect = class extends rpg.Viewable {
-    constructor(props) {
-        super(props);
-    }
-};
-
 rpg.Repository = class {
     constructor(repositoryName, instanceConstructor) {
         this.name        = repositoryName;
@@ -49,6 +21,27 @@ rpg.Repository = class {
             instance[key] = overridingProperties[key];
         }
         return instance;
+    }
+};
+
+rpg.Viewable = class {
+    constructor(props) {
+        this.id = rpg.Game.uid();
+        for (let key in props) {
+            if (key == "imageSrc") {
+                this.image     = document.createElement('img');
+                this.image.src = props.imageSrc;
+                this.image.id  = this.id;
+            } else {
+                this[key] = props[key];
+            }
+        }
+    }
+};
+
+rpg.Effect = class extends rpg.Viewable {
+    constructor(props) {
+        super(props);
     }
 };
 
@@ -87,13 +80,32 @@ rpg.Mob = class extends rpg.Viewable {
     }
 };
 
+rpg.Room = class extends rpg.Viewable {
+    constructor(props) {
+        super(props);
+    }
+    update() {
+        for (let mob of this.mobs) {
+            mob.update();
+        }
+    }
+    getRoomMarkup() {
+        let markup = '';
+        markup += '<span class="roomName">'+this.name+'</span><br>';
+        markup += '<span class="roomDesc">'+this.desc+'</span><br>';
+        return markup;
+    }
+};
+
 rpg.Game = class Game {
     static uid() {
-        return '_' + Math.random().toString(36).substr(2, 9);
+        return '_'+ Math.random().toString(36).substr(2, 9);
     }
     constructor() {
         this.turnNum = 0;
         this.cmdHist = {pos:0, partial:null, commands:[]};
+        this.rooms   = [RoomsRepo.create('start')];
+        this.room    = this.rooms[0];
         this.player  = MobsRepo.create('player');
         this.display = new Display();
         this.display.showActions(this.player.actions);
@@ -105,7 +117,9 @@ rpg.Game = class Game {
     update() {
         this.turnNum++;
         this.display.showLogMessage(`=== [turn: ${this.turnNum}] ===`);
-        this.player.update();
+        this.room.update();
         this.display.update();
+        this.player.update();
     }
 };
+

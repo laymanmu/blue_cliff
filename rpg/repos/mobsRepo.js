@@ -14,6 +14,7 @@ MobsRepo.define('player', {
 
 MobsRepo.define('wombat', {
     desc: "a wombat",
+    imageSrc: "images/action_rest.png",
     attributes: {con:10,str:10,dex:10,int:10,hp:100},
     effects: [],
     actions: []
