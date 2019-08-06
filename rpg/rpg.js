@@ -27,14 +27,6 @@ rpg.Effect = class extends rpg.Viewable {
     constructor(props) {
         super(props);
     }
-    isOnAttribute(name) {
-        for (let n in this.attributes) {
-            if (n === name) {
-                return true;
-            }
-        }
-        return false;
-    }
 };
 
 rpg.Repository = class {

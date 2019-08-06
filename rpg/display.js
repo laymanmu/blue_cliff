@@ -1,8 +1,7 @@
 
 class Display {
     constructor() {
-        this.canvas      = document.getElementById('canvas');
-        this.context     = this.canvas.getContext('2d');
+        this.mobs        = document.getElementById('mobs');
         this.details     = document.getElementById('details');
         this.actions     = document.getElementById('actions');
         this.log         = document.getElementById('log');
