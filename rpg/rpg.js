@@ -91,8 +91,11 @@ rpg.Room = class extends rpg.Viewable {
     }
     getRoomMarkup() {
         let markup = '';
-        markup += '<span class="roomName">'+this.name+'</span><br>';
-        markup += '<span class="roomDesc">'+this.desc+'</span><br>';
+        markup += `<span class="roomName">${this.name}</span><br>`;
+        markup += `<span class="roomDesc">${this.desc}</span><br>`;
+        for (let gate of this.gates) {
+            markup += `<span class="roomGate">${gate.name}</span>`;
+        }
         return markup;
     }
 };
@@ -104,8 +107,9 @@ rpg.Game = class Game {
     constructor() {
         this.turnNum = 0;
         this.cmdHist = {pos:0, partial:null, commands:[]};
-        this.rooms   = [RoomsRepo.create('start')];
+        this.rooms   = [RoomsRepo.create('start'), RoomsRepo.create('creek')];
         this.room    = this.rooms[0];
+        this.room.gates.push({name:"path", room:'creek'});
         this.player  = MobsRepo.create('player');
         this.display = new Display();
         this.display.showActions(this.player.actions);

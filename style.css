@@ -46,6 +46,11 @@ table {
 .roomDesc {
   color: #ababff;
 }
+.roomGate {
+  color: #abffab;
+  border-bottom: 1px solid #abffab;
+}
+
   
 #side {
     width: 200px;
